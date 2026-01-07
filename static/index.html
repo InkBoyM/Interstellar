@@ -1,52 +1,242 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="referrer" content="no-referrer" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
-  <title id="t">Home</title>
-  <link rel="stylesheet" href="/assets/css/global.css?v=6" />
-  <link rel="stylesheet" href="/assets/css/h.css?v=01" />
-  <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
-    crossorigin="anonymous"></script>
+
+  <title>MadEgg Proxy</title>
+  <link rel="icon" href="favicon.png" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Futura, sans-serif;
+      background: url("https://cdn.dribbble.com/users/234525/screenshots/5853076/eggsacrosstheuniverse.jpg")
+        no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .time-date {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0,0,0,.8);
+    }
+
+    .search-container {
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 15px;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      backdrop-filter: blur(10px);
+      outline: none;
+    }
+
+    .search-bar::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .bookmarks {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .bookmark {
+      width: 90px;
+      height: 90px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      font-size: .8rem;
+      transition: transform .2s;
+    }
+
+    .bookmark:hover {
+      transform: scale(1.1);
+    }
+
+    .bookmark img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+    }
+
+    .add-bookmark {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.2);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .add-bookmark-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,.85);
+      padding: 20px;
+      border-radius: 15px;
+      gap: 10px;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .add-bookmark-modal input,
+    .add-bookmark-modal button {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .add-bookmark-modal button {
+      cursor: pointer;
+      background: #4a8cff;
+      color: white;
+    }
+  </style>
 </head>
 
-<body class="center" onload="SplashT">
-  <div class="f-nav"></div>
-  <div id="particles-js">
-    <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/"></script>
-    <div class="main">
-      <h1 class="title">&#73;&#110;&#116;&#101;&#114;&#115;&#116;&#101;&#108;&#108;&#97;&#114;</h1>
-      <p id="splash"></p>
-      <div class="search-container">
-        <form id="fv" method="POST">
-          <input id="input" class="truncate" placeholder="Search or enter a URL" type="text" />
-        </form>
-      </div>
-    </div>
+<body>
+  <div class="time-date" id="time"></div>
+
+  <div class="search-container">
+    <!-- REQUIRED BY INTERSTELLAR -->
+    <form id="fv">
+      <input
+        id="input"
+        class="search-bar"
+        type="text"
+        placeholder="Search or enter a URL"
+        autocomplete="off"
+      />
+    </form>
+
+    <div class="bookmarks" id="bookmarks"></div>
+
+    <div class="add-bookmark" id="add-bookmark">+ Add Bookmark</div>
   </div>
-  <script src="assets/js/index-3.js"></script>
-  <script src="/assets/js/h1.js"></script>
-  <script src="./assets/mathematics/bundle.js?v=2025-04-15"></script>
-  <script src="./assets/mathematics/config.js?v=2025-04-15"></script>
+
+  <!-- Bookmark Modal -->
+  <div class="add-bookmark-modal" id="bookmark-modal">
+    <input id="bm-name" placeholder="Bookmark name" />
+    <input id="bm-url" placeholder="https://example.com" />
+    <button id="bm-save">Save</button>
+  </div>
+
+  <!-- Interstellar / Ultraviolet engine (DO NOT REMOVE) -->
+  <script src="./assets/mathematics/bundle.js"></script>
+  <script src="./assets/mathematics/config.js"></script>
   <script src="/assets/js/m1.js"></script>
-  <!-- DO NOT REMOVE-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+
   <script>
-    window.dataLayer = window.dataLayer || []
-    function gtag() {
-      dataLayer.push(arguments)
+    /* Clock */
+    function updateTime() {
+      const d = new Date()
+      document.getElementById("time").textContent =
+        d.toLocaleDateString() + " " + d.toLocaleTimeString()
     }
-    gtag("js", new Date())
+    setInterval(updateTime, 1000)
+    updateTime()
 
-    gtag("config", "G-WKJQ5QHQTJ")
+    /* ===== Bookmark system (UV-safe) ===== */
+
+    const bookmarkContainer = document.getElementById("bookmarks")
+    const modal = document.getElementById("bookmark-modal")
+
+    function uvReady() {
+      return (
+        typeof window.__uv$config !== "undefined" &&
+        typeof __uv$config.encodeUrl === "function"
+      )
+    }
+
+    function waitForUV(cb) {
+      if (uvReady()) return cb()
+      setTimeout(() => waitForUV(cb), 50)
+    }
+
+    function loadBookmarks() {
+      bookmarkContainer.innerHTML = ""
+      const saved =
+        JSON.parse(localStorage.getItem("madeggBookmarks")) || []
+      saved.forEach(b => createBookmark(b.name, b.url))
+    }
+
+    function createBookmark(name, url) {
+      waitForUV(() => {
+        const a = document.createElement("a")
+        a.className = "bookmark"
+        a.href = __uv$config.prefix + __uv$config.encodeUrl(url)
+
+        const img = document.createElement("img")
+        img.src = `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`
+
+        const span = document.createElement("span")
+        span.textContent = name
+
+        a.append(img, span)
+        bookmarkContainer.appendChild(a)
+      })
+    }
+
+    document.getElementById("add-bookmark").onclick = () => {
+      modal.style.display = "flex"
+    }
+
+    document.getElementById("bm-save").onclick = () => {
+      const name = document.getElementById("bm-name").value
+      let url = document.getElementById("bm-url").value
+
+      if (!name || !url) return
+      if (!url.startsWith("http")) url = "https://" + url
+
+      const bookmarks =
+        JSON.parse(localStorage.getItem("madeggBookmarks")) || []
+
+      bookmarks.push({ name, url })
+      localStorage.setItem("madeggBookmarks", JSON.stringify(bookmarks))
+
+      modal.style.display = "none"
+      document.getElementById("bm-name").value = ""
+      document.getElementById("bm-url").value = ""
+      loadBookmarks()
+    }
+
+    window.addEventListener("load", () => {
+      waitForUV(loadBookmarks)
+    })
   </script>
-  <!-- DO NOT REMOVE-->
 </body>
-
 </html>
